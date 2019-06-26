@@ -1,5 +1,11 @@
 ![Launcher Icon](/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 
+# About
+
+As the name of the app suggests, it is intended to be used like a placard or banner.
+
+For example, you can use it to show the phone number to another person.
+
 # Screenshots
 
 ![Screen 1](/screenshots/1.png)
