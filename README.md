@@ -6,6 +6,10 @@ As the name of the app suggests, it is intended to be used like a placard or ban
 
 For example, you can use it to show the phone number to another person.
 
+# Download
+
+Download the app on [Google Play](https://play.google.com/store/apps/details?id=com.italankin.placard)
+
 # Screenshots
 
 ![Screen 1](/screenshots/1.png)
