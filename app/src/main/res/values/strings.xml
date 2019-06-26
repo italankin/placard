@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Placard</string>
+    <string name="hint_text">Each line of text will be displayed on a different page</string>
+    <string name="error_empty">Text must not be empty</string>
+    <string name="action_show">Show</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="reset">Reset</string>
+</resources>

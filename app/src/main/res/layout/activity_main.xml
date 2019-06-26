@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.italankin.placard.MainActivity">
+
+    <FrameLayout
+        android:id="@+id/preview_box"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/preview_box_height"
+        android:background="@color/defaultBackgroundColor">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/preview_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_margin="16dp"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:textColor="@color/defaultTextColor"
+            app:autoSizeMaxTextSize="100sp"
+            app:autoSizeMinTextSize="8sp"
+            app:autoSizeTextType="uniform"
+            tools:text="PREVIEW" />
+
+        <ImageView
+            android:id="@+id/text_color"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="@dimen/icon_size"
+            android:layout_marginRight="@dimen/icon_size"
+            android:background="@drawable/selector_icon"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_color_text" />
+
+        <ImageView
+            android:id="@+id/background_color"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_gravity="end|top"
+            android:background="@drawable/selector_icon"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_color_fill" />
+
+    </FrameLayout>
+
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/preview_box_height"
+        android:background="#0000"
+        android:gravity="top|start"
+        android:hint="@string/hint_text"
+        android:inputType="textMultiLine"
+        android:padding="16dp"
+        android:selectAllOnFocus="true"
+        android:textSize="18sp"
+        tools:ignore="Autofill" />
+
+</FrameLayout>
