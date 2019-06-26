@@ -148,6 +148,7 @@ public class MainActivity extends AppCompatActivity implements ColorPickerDialog
         }
         if (data.isEmpty()) {
             editText.setText("");
+            editText.requestFocus();
             Toast.makeText(this, R.string.error_empty, Toast.LENGTH_SHORT).show();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.showSoftInput(editText, 0);
