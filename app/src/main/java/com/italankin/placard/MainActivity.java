@@ -1,27 +1,34 @@
 package com.italankin.placard;
 
 import android.content.ClipDescription;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.ColorInt;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.italankin.placard.colorpicker.ColorPickerDialogFragment;
+import com.italankin.placard.favorites.FavoritesActivity;
 import com.italankin.placard.util.SharedPrefs;
 import com.italankin.placard.util.SimpleTextWatcher;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ColorPickerDialogFragment.Listener {
+public class MainActivity extends AppCompatActivity implements
+        ColorPickerDialogFragment.Listener,
+        ActivityResultCallback<String> {
 
     private static final String TAG_TEXT_COLOR = "text_color";
     private static final String TAG_BACKGROUND_COLOR = "background_color";
@@ -34,8 +41,13 @@ public class MainActivity extends AppCompatActivity implements ColorPickerDialog
     private View previewBox;
     private View play;
 
+    private MenuItem menuFavoriteAdd;
+
     private int selectedTextColor;
     private int selectedBackgroundColor;
+
+    private final ActivityResultLauncher<Void> favoritesLauncher = registerForActivityResult(
+            new FavoritesActivity.SelectFavoriteContract(), this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements ColorPickerDialog
         View textColor = findViewById(R.id.text_color);
 
         play.setOnClickListener(v -> display());
-        play.setEnabled(editText.getText().length() > 0);
+        play.setEnabled(!getTrimmed().isEmpty());
 
         editText.addTextChangedListener(new SimpleTextWatcher(text -> {
             int indexOf = text.indexOf('\n');
@@ -63,7 +75,11 @@ public class MainActivity extends AppCompatActivity implements ColorPickerDialog
                 text = text.substring(0, indexOf);
             }
             previewText.setText(text);
-            play.setEnabled(!text.isEmpty());
+            boolean enabled = !text.isEmpty();
+            play.setEnabled(enabled);
+            if (menuFavoriteAdd != null) {
+                menuFavoriteAdd.setVisible(enabled);
+            }
         }));
         textColor.setOnClickListener(v -> showColorPicker(selectedTextColor, TAG_TEXT_COLOR));
         backgroundColor.setOnClickListener(v -> showColorPicker(selectedBackgroundColor, TAG_BACKGROUND_COLOR));
@@ -75,9 +91,38 @@ public class MainActivity extends AppCompatActivity implements ColorPickerDialog
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        menuFavoriteAdd = menu.findItem(R.id.action_favorite_add);
+        menuFavoriteAdd.setVisible(!getTrimmed().isEmpty());
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_favorites) {
+            favoritesLauncher.launch(null);
+            return true;
+        } else if (item.getItemId() == R.id.action_favorite_add) {
+            addFavorite();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         handleIntent(intent);
+    }
+
+    @Override
+    public void onActivityResult(String result) {
+        if (result == null || result.isEmpty()) {
+            return;
+        }
+        editText.setText(result);
+        editText.selectAll();
     }
 
     @Override
@@ -126,14 +171,6 @@ public class MainActivity extends AppCompatActivity implements ColorPickerDialog
                 data.add(line);
             }
         }
-        if (data.isEmpty()) {
-            editText.setText("");
-            editText.requestFocus();
-            Toast.makeText(this, R.string.error_empty, Toast.LENGTH_SHORT).show();
-            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.showSoftInput(editText, 0);
-            return;
-        }
         Intent intent = PlacardActivity.getStartIntent(this, data);
         startActivity(intent);
     }
@@ -166,5 +203,21 @@ public class MainActivity extends AppCompatActivity implements ColorPickerDialog
                 .setSelectedColor(selectedBackgroundColor)
                 .build()
                 .show(getSupportFragmentManager(), tagBackgroundColor);
+    }
+
+    private void addFavorite() {
+        String text = getTrimmed();
+        if (text.isEmpty()) {
+            return;
+        }
+        List<String> savedItems = new ArrayList<>(prefs.getSavedItems());
+        savedItems.add(text);
+        prefs.setSavedItems(savedItems);
+        Toast.makeText(this, R.string.toast_favorite_added, Toast.LENGTH_SHORT).show();
+    }
+
+    @NonNull
+    private String getTrimmed() {
+        return editText.getText().toString().trim();
     }
 }

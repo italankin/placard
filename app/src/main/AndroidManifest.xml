@@ -31,6 +31,12 @@
             android:exported="true"
             android:theme="@style/AppTheme.Fullscreen" />
 
+        <activity
+            android:name="com.italankin.placard.favorites.FavoritesActivity"
+            android:exported="false"
+            android:label="@string/title_favorites"
+            android:theme="@style/AppTheme" />
+
     </application>
 
 </manifest>
