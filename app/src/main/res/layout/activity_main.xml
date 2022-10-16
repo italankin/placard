@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.italankin.placard.MainActivity">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/toolbar"
@@ -14,7 +12,8 @@
         android:layout_height="?actionBarSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:title="@string/app_name" />
 
     <FrameLayout
         android:id="@+id/preview_box"
@@ -68,13 +67,13 @@
         android:background="#0000"
         android:gravity="top|start"
         android:hint="@string/hint_text"
+        android:importantForAutofill="no"
         android:inputType="textMultiLine"
         android:padding="16dp"
         android:selectAllOnFocus="true"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@id/play"
-        app:layout_constraintTop_toBottomOf="@id/preview_box"
-        tools:ignore="Autofill" />
+        app:layout_constraintTop_toBottomOf="@id/preview_box" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/play"
