@@ -18,9 +18,10 @@
     <FrameLayout
         android:id="@+id/preview_box"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/preview_box_height"
+        android:layout_height="0dp"
         android:background="@color/defaultBackgroundColor"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent=".2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
