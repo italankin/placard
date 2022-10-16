@@ -4,10 +4,6 @@ import android.content.ClipDescription;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -16,10 +12,12 @@ import android.widget.Toast;
 
 import androidx.annotation.ColorInt;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
 import com.italankin.placard.colorpicker.ColorPickerDialogFragment;
 import com.italankin.placard.util.SharedPrefs;
+import com.italankin.placard.util.SimpleTextWatcher;
 
 import java.util.ArrayList;
 
@@ -34,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements ColorPickerDialog
 
     private TextView previewText;
     private View previewBox;
+    private View play;
 
     private int selectedTextColor;
     private int selectedBackgroundColor;
@@ -45,31 +44,27 @@ public class MainActivity extends AppCompatActivity implements ColorPickerDialog
 
         prefs = new SharedPrefs(this);
 
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
         editText = findViewById(R.id.edit_text);
         previewText = findViewById(R.id.preview_text);
         previewBox = findViewById(R.id.preview_box);
+        play = findViewById(R.id.play);
         View backgroundColor = findViewById(R.id.background_color);
         View textColor = findViewById(R.id.text_color);
 
-        editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+        play.setOnClickListener(v -> display());
+        play.setEnabled(editText.getText().length() > 0);
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                String str = s.toString();
-                int indexOf = str.indexOf('\n');
-                if (indexOf != -1) {
-                    str = str.substring(0, indexOf);
-                }
-                previewText.setText(str);
+        editText.addTextChangedListener(new SimpleTextWatcher(text -> {
+            int indexOf = text.indexOf('\n');
+            if (indexOf != -1) {
+                text = text.substring(0, indexOf);
             }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+            previewText.setText(text);
+            play.setEnabled(!text.isEmpty());
+        }));
         textColor.setOnClickListener(v -> showColorPicker(selectedTextColor, TAG_TEXT_COLOR));
         backgroundColor.setOnClickListener(v -> showColorPicker(selectedBackgroundColor, TAG_BACKGROUND_COLOR));
 
@@ -77,21 +72,6 @@ public class MainActivity extends AppCompatActivity implements ColorPickerDialog
         setSelectedBackgroundColor(prefs.getBackgroundColor(getDefaultBackgroundColor()));
 
         handleIntent(getIntent());
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_show) {
-            display();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

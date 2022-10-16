@@ -23,7 +23,7 @@ public class ColorPickerView extends LinearLayout {
 
     private static final int DEFAULT_SELECTED_COLOR = Color.BLACK;
     private static final ColorModel DEFAULT_COLOR_MODEL = ColorModel.RGB;
-    private static final String HEX_FORMAT = "#%08x";
+    private static final String HEX_FORMAT = "#%06x";
 
     private static final String STATE_BASE_STATE = "base_state";
     private static final String STATE_PREVIEW_VISIBLE = "preview_visible";
@@ -91,7 +91,7 @@ public class ColorPickerView extends LinearLayout {
         colorModelController = getModelController(model);
         colorModelController.setListener(newColor -> {
             preview.setBackgroundColor(newColor);
-            hex.setText(String.format(HEX_FORMAT, newColor));
+            hex.setText(String.format(HEX_FORMAT, 0x00ffffff & newColor));
             if (colorChangedListener != null) {
                 colorChangedListener.onColorChanged(newColor);
             }

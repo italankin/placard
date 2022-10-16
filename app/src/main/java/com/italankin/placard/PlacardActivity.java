@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,12 +36,10 @@ public class PlacardActivity extends AppCompatActivity {
 
     private static final float SYSTEM_BARS_VALUE_SHIFT = 0.2f;
 
-    private static final int FLAG_IMMERSIVE =
-            Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ? View.SYSTEM_UI_FLAG_IMMERSIVE : 0;
     private static final int DEFAULT_FLAGS = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_FULLSCREEN
-            | FLAG_IMMERSIVE;
+            | View.SYSTEM_UI_FLAG_IMMERSIVE;
 
     private View decorView;
     private int textColor;
@@ -64,11 +61,10 @@ public class PlacardActivity extends AppCompatActivity {
                 ContextCompat.getColor(this, R.color.defaultBackgroundColor));
 
         window.setBackgroundDrawable(new ColorDrawable(backgroundColor));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            int systemBarsColor = makeSystemBarsColor(backgroundColor);
-            window.setStatusBarColor(systemBarsColor);
-            window.setNavigationBarColor(systemBarsColor);
-        }
+        int systemBarsColor = makeSystemBarsColor(backgroundColor);
+        window.setStatusBarColor(systemBarsColor);
+        window.setNavigationBarColor(systemBarsColor);
+
         ViewPager pager = findViewById(R.id.pager);
         ArrayList<String> list = getIntent().getStringArrayListExtra(EXTRA_DATA);
         pager.setAdapter(new Adapter(list));
