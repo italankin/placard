@@ -12,7 +12,7 @@
         android:overScrollMode="ifContentScrolls"
         tools:context="com.italankin.placard.PlacardActivity" />
 
-    <com.rd.PageIndicatorView
+    <ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator
         android:id="@+id/indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,8 +20,7 @@
         android:layout_marginLeft="48dp"
         android:layout_marginRight="48dp"
         android:padding="16dp"
-        app:piv_animationType="scale"
-        app:piv_padding="4dp"
-        app:piv_radius="6dp" />
+        app:spi_dotSpacing="8dp"
+        app:spi_dotSize="6dp" />
 
 </FrameLayout>

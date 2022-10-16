@@ -18,9 +18,10 @@ import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.italankin.placard.util.SharedPrefs;
-import com.rd.PageIndicatorView;
 
 import java.util.ArrayList;
+
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
 
 public class PlacardActivity extends AppCompatActivity {
 
@@ -70,10 +71,10 @@ public class PlacardActivity extends AppCompatActivity {
         pager.setAdapter(new Adapter(list));
         pager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.page_margin));
 
-        PageIndicatorView indicator = findViewById(R.id.indicator);
-        indicator.setViewPager(pager);
-        indicator.setSelectedColor(textColor);
-        indicator.setUnselectedColor(textColor & MASK_UNSELECTED_COLOR);
+        ScrollingPagerIndicator indicator = findViewById(R.id.indicator);
+        indicator.attachToPager(pager);
+        indicator.setSelectedDotColor(textColor);
+        indicator.setDotColor(textColor & MASK_UNSELECTED_COLOR);
     }
 
     private int makeSystemBarsColor(int backgroundColor) {
