@@ -60,6 +60,7 @@ public class PlacardActivity extends AppCompatActivity {
                 ContextCompat.getColor(this, R.color.defaultTextColor));
         int backgroundColor = prefs.getBackgroundColor(
                 ContextCompat.getColor(this, R.color.defaultBackgroundColor));
+        SharedPrefs.TextFont font = prefs.getTextFont();
 
         window.setBackgroundDrawable(new ColorDrawable(backgroundColor));
         int systemBarsColor = makeSystemBarsColor(backgroundColor);
@@ -68,7 +69,7 @@ public class PlacardActivity extends AppCompatActivity {
 
         ViewPager pager = findViewById(R.id.pager);
         ArrayList<String> list = getIntent().getStringArrayListExtra(EXTRA_DATA);
-        pager.setAdapter(new Adapter(list));
+        pager.setAdapter(new Adapter(list, font));
         pager.setPageMargin(getResources().getDimensionPixelSize(R.dimen.page_margin));
 
         ScrollingPagerIndicator indicator = findViewById(R.id.indicator);
@@ -91,9 +92,11 @@ public class PlacardActivity extends AppCompatActivity {
 
     private class Adapter extends PagerAdapter {
         private final ArrayList<String> data;
+        private final SharedPrefs.TextFont font;
 
-        private Adapter(ArrayList<String> data) {
+        private Adapter(ArrayList<String> data, SharedPrefs.TextFont font) {
             this.data = data;
+            this.font = font;
         }
 
         @Override
@@ -108,6 +111,7 @@ public class PlacardActivity extends AppCompatActivity {
             TextView textView = view.findViewById(R.id.text);
             textView.setTextColor(textColor);
             textView.setText(data.get(position));
+            textView.setTypeface(font.typeface);
             textView.setOnClickListener(v -> {
                 int visibility = decorView.getSystemUiVisibility();
                 decorView.setSystemUiVisibility(visibility == 0 ? DEFAULT_FLAGS : 0);

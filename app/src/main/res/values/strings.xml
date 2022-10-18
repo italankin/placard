@@ -8,11 +8,18 @@
     <string name="title_favorites">Favorites</string>
     <string name="toast_favorite_added">Added</string>
 
+    <string name="title_font">Font</string>
+    <string name="title_font_default">Default</string>
+    <string name="title_font_monospace">Monospace</string>
+    <string name="title_font_sans_serif">Sans Serif</string>
+    <string name="title_font_serif">Serif</string>
+
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="reset">Reset</string>
 
     <string name="cd_text_color">Text color</string>
+    <string name="cd_text_font">Text font</string>
     <string name="cd_background_color">Background color</string>
     <string name="cd_play">Show</string>
     <string name="cd_delete">Delete</string>

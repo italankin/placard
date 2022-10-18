@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.italankin.placard.colorpicker.ColorPickerDialogFragment;
 import com.italankin.placard.favorites.FavoritesActivity;
 import com.italankin.placard.util.SharedPrefs;
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements
         play = findViewById(R.id.play);
         View backgroundColor = findViewById(R.id.background_color);
         View textColor = findViewById(R.id.text_color);
+        View textFont = findViewById(R.id.text_font);
 
         play.setOnClickListener(v -> display());
         play.setEnabled(!getTrimmed().isEmpty());
@@ -83,6 +85,9 @@ public class MainActivity extends AppCompatActivity implements
         }));
         textColor.setOnClickListener(v -> showColorPicker(selectedTextColor, TAG_TEXT_COLOR));
         backgroundColor.setOnClickListener(v -> showColorPicker(selectedBackgroundColor, TAG_BACKGROUND_COLOR));
+        textFont.setOnClickListener(v -> showFontList());
+        SharedPrefs.TextFont font = prefs.getTextFont();
+        previewText.setTypeface(font.typeface);
 
         setSelectedTextColor(prefs.getTextColor(getDefaultTextColor()));
         setSelectedBackgroundColor(prefs.getBackgroundColor(getDefaultBackgroundColor()));
@@ -203,6 +208,23 @@ public class MainActivity extends AppCompatActivity implements
                 .setSelectedColor(selectedColor)
                 .build()
                 .show(getSupportFragmentManager(), tag);
+    }
+
+    private void showFontList() {
+        CharSequence[] items = new CharSequence[SharedPrefs.TextFont.values().length];
+        SharedPrefs.TextFont[] values = SharedPrefs.TextFont.values();
+        for (int i = 0; i < values.length; i++) {
+            SharedPrefs.TextFont font = values[i];
+            items[i] = getString(font.fontTitle);
+        }
+        new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.title_font)
+                .setItems(items, (dialog, which) -> {
+                    SharedPrefs.TextFont selected = SharedPrefs.TextFont.values()[which];
+                    prefs.setTextFont(selected);
+                    previewText.setTypeface(selected.typeface);
+                })
+                .show();
     }
 
     private void addFavorite() {

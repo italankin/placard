@@ -2,9 +2,12 @@ package com.italankin.placard.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.preference.PreferenceManager;
 
 import androidx.annotation.ColorInt;
+
+import com.italankin.placard.R;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,6 +17,7 @@ public class SharedPrefs {
 
     private static final String KEY_TEXT_COLOR = "text_color";
     private static final String KEY_BACKGROUND_COLOR = "background_color";
+    private static final String KEY_TEXT_FONT = "text_font";
     private static final String KEY_SAVED_ITEMS = "saved_items";
 
     private static final String DELIMITER = ";;;";
@@ -63,5 +67,39 @@ public class SharedPrefs {
         }
         String[] strings = value.split(DELIMITER);
         return Arrays.asList(strings);
+    }
+
+    public void setTextFont(TextFont font) {
+        prefs.edit().putString(KEY_TEXT_FONT, font.fontName).apply();
+    }
+
+    public TextFont getTextFont() {
+        String font = prefs.getString(KEY_TEXT_FONT, null);
+        if (font == null) {
+            return TextFont.DEFAULT;
+        }
+        for (TextFont textFont : TextFont.values()) {
+            if (textFont.fontName.equals(font)) {
+                return textFont;
+            }
+        }
+        return TextFont.DEFAULT;
+    }
+
+    public enum TextFont {
+        DEFAULT("default", Typeface.DEFAULT, R.string.title_font_default),
+        MONOSPACE("monospace", Typeface.MONOSPACE, R.string.title_font_monospace),
+        SANS_SERIF("sans_serif", Typeface.SANS_SERIF, R.string.title_font_sans_serif),
+        SERIF("serif", Typeface.SERIF, R.string.title_font_serif);
+
+        public final String fontName;
+        public final Typeface typeface;
+        public final int fontTitle;
+
+        TextFont(String fontName, Typeface typeface, int fontTitle) {
+            this.fontName = fontName;
+            this.typeface = typeface;
+            this.fontTitle = fontTitle;
+        }
     }
 }

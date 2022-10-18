@@ -40,6 +40,17 @@
             tools:text="PREVIEW" />
 
         <ImageView
+            android:id="@+id/text_font"
+            android:layout_width="@dimen/icon_size"
+            android:layout_height="@dimen/icon_size"
+            android:layout_gravity="end|top"
+            android:layout_marginEnd="96dp"
+            android:background="@drawable/selector_icon"
+            android:contentDescription="@string/cd_text_font"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_font" />
+
+        <ImageView
             android:id="@+id/text_color"
             android:layout_width="@dimen/icon_size"
             android:layout_height="@dimen/icon_size"
@@ -83,10 +94,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
+        android:contentDescription="@string/cd_play"
         android:src="@drawable/ic_play"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:contentDescription="@string/cd_play" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
