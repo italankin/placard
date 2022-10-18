@@ -11,4 +11,9 @@
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="reset">Reset</string>
+
+    <string name="cd_text_color">Text color</string>
+    <string name="cd_background_color">Background color</string>
+    <string name="cd_play">Show</string>
+    <string name="cd_delete">Delete</string>
 </resources>
