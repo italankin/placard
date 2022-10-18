@@ -195,14 +195,14 @@ public class MainActivity extends AppCompatActivity implements
         return ContextCompat.getColor(this, R.color.defaultTextColor);
     }
 
-    private void showColorPicker(int selectedBackgroundColor, String tagBackgroundColor) {
+    private void showColorPicker(int selectedColor, String tag) {
         new ColorPickerDialogFragment.Builder()
                 .setHexVisible(true)
                 .setPreviewVisible(true)
                 .showResetButton(true)
-                .setSelectedColor(selectedBackgroundColor)
+                .setSelectedColor(selectedColor)
                 .build()
-                .show(getSupportFragmentManager(), tagBackgroundColor);
+                .show(getSupportFragmentManager(), tag);
     }
 
     private void addFavorite() {
