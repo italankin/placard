@@ -29,7 +29,4 @@
     <color name="md_theme_light_inverseOnSurface">#EFF1EF</color>
     <color name="md_theme_light_inverseSurface">#2D3130</color>
     <color name="md_theme_light_inversePrimary">#51DBCC</color>
-    <color name="md_theme_light_shadow">#000000</color>
-    <color name="md_theme_light_surfaceTint">#006A62</color>
-    <color name="md_theme_light_surfaceTintColor">#006A62</color>
 </resources>
