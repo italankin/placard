@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.ColorInt;
@@ -17,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
-
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.italankin.placard.colorpicker.ColorPickerDialogFragment;
 import com.italankin.placard.favorites.FavoritesActivity;
@@ -100,6 +98,10 @@ public class MainActivity extends AppCompatActivity implements
         getMenuInflater().inflate(R.menu.main, menu);
         menuFavoriteAdd = menu.findItem(R.id.action_favorite_add);
         menuFavoriteAdd.setVisible(!getTrimmed().isEmpty());
+        MenuItem menuRotation = menu.findItem(R.id.action_rotation);
+        SharedPrefs.Rotation rotation = prefs.getRotation();
+        menuRotation.setIcon(rotation.icon);
+        menuRotation.setTitle(rotation.title);
         return true;
     }
 
@@ -110,6 +112,13 @@ public class MainActivity extends AppCompatActivity implements
             return true;
         } else if (item.getItemId() == R.id.action_favorite_add) {
             addFavorite();
+            return true;
+        } else if (item.getItemId() == R.id.action_rotation) {
+            SharedPrefs.Rotation rotation = prefs.getRotation();
+            SharedPrefs.Rotation newRotation = SharedPrefs.Rotation.values()[(rotation.ordinal() + 1) % SharedPrefs.Rotation.values().length];
+            prefs.setRotation(newRotation);
+            item.setTitle(newRotation.title);
+            item.setIcon(newRotation.icon);
             return true;
         }
         return super.onOptionsItemSelected(item);

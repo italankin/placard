@@ -14,6 +14,10 @@
     <string name="title_font_sans_serif">Sans Serif</string>
     <string name="title_font_serif">Serif</string>
 
+    <string name="rotation_auto">Auto</string>
+    <string name="rotation_portrait">Portrait</string>
+    <string name="rotation_landscape">Landscape</string>
+
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="reset">Reset</string>

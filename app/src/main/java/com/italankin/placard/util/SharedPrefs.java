@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.preference.PreferenceManager;
-
 import androidx.annotation.ColorInt;
-
 import com.italankin.placard.R;
 
 import java.util.Arrays;
@@ -19,6 +17,7 @@ public class SharedPrefs {
     private static final String KEY_BACKGROUND_COLOR = "background_color";
     private static final String KEY_TEXT_FONT = "text_font";
     private static final String KEY_SAVED_ITEMS = "saved_items";
+    private static final String KEY_ROTATION = "rotation";
 
     private static final String DELIMITER = ";;;";
 
@@ -86,6 +85,23 @@ public class SharedPrefs {
         return TextFont.DEFAULT;
     }
 
+    public void setRotation(Rotation rotation) {
+        prefs.edit().putString(KEY_ROTATION, rotation.key).apply();
+    }
+
+    public Rotation getRotation() {
+        String key = prefs.getString(KEY_ROTATION, null);
+        if (key == null) {
+            return Rotation.AUTO;
+        }
+        for (Rotation textFont : Rotation.values()) {
+            if (textFont.key.equals(key)) {
+                return textFont;
+            }
+        }
+        return Rotation.AUTO;
+    }
+
     public enum TextFont {
         DEFAULT("default", Typeface.DEFAULT, R.string.title_font_default),
         MONOSPACE("monospace", Typeface.MONOSPACE, R.string.title_font_monospace),
@@ -100,6 +116,22 @@ public class SharedPrefs {
             this.fontName = fontName;
             this.typeface = typeface;
             this.fontTitle = fontTitle;
+        }
+    }
+
+    public enum Rotation {
+        AUTO("auto", R.drawable.ic_rotation_auto, R.string.rotation_auto),
+        PORTRAIT("portrait", R.drawable.ic_rotation_portrait, R.string.rotation_portrait),
+        LANDSCAPE("landscape", R.drawable.ic_rotation_landscape, R.string.rotation_landscape);
+
+        public final String key;
+        public final int icon;
+        public final int title;
+
+        Rotation(String key, int icon, int title) {
+            this.key = key;
+            this.icon = icon;
+            this.title = title;
         }
     }
 }

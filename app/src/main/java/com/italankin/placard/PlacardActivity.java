@@ -2,6 +2,7 @@ package com.italankin.placard;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -10,18 +11,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-
 import com.italankin.placard.util.SharedPrefs;
+import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
 
 import java.util.ArrayList;
-
-import ru.tinkoff.scrollingpagerindicator.ScrollingPagerIndicator;
 
 public class PlacardActivity extends AppCompatActivity {
 
@@ -56,6 +54,18 @@ public class PlacardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_placard);
 
         SharedPrefs prefs = new SharedPrefs(this);
+        SharedPrefs.Rotation rotation = prefs.getRotation();
+        switch (rotation) {
+            case AUTO:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                break;
+            case PORTRAIT:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_PORTRAIT);
+                break;
+            case LANDSCAPE:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+                break;
+        }
         textColor = prefs.getTextColor(
                 ContextCompat.getColor(this, R.color.defaultTextColor));
         int backgroundColor = prefs.getBackgroundColor(
