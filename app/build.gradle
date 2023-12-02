@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
+    compileSdk 34
     defaultConfig {
         namespace 'com.italankin.placard'
         applicationId "com.italankin.placard"
         minSdkVersion 21
-        targetSdkVersion 33
+        targetSdk 34
         versionCode 3
         versionName "1.1"
     }
